@@ -1,0 +1,28 @@
+# Core Python stack
+numpy
+pandas
+matplotlib
+
+# Geospatial analysis
+geopandas
+shapely
+pyproj
+fiona
+
+# Transit & network modeling
+r5py
+jpype1        # required for r5py’s Java bridge
+
+# Visualization
+folium
+plotly
+
+# Data access
+requests
+census
+us
+python-dotenv
+
+# Development / notebook environment
+jupyter
+ipykernel
