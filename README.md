@@ -1,9 +1,3 @@
-Perfect 🔥 — here’s your **final, fully polished `README.md`** that covers **every aspect of your CYPLAN 101 Track B project** — from setup and execution to report generation, deliverables, and reproducibility.
-
-It’s written for both your **MTC mentor** and **future portfolio reviewers**, so anyone can clone, run, and generate the full report end-to-end.
-
----
-
 ````markdown
 # 🚆 Transit Access Equity: Time-Aware Isochrones in the Bay Area
 
