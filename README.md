@@ -1,4 +1,3 @@
-````markdown
 # 🚆 Transit Access Equity: Time-Aware Isochrones in the Bay Area
 
 **CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)**  
@@ -10,11 +9,11 @@
 ## ⚡ Quickstart
 
 1. **Clone the repo**
+
    ```bash
    git clone https://github.com/<your-username>/MTC-Transit_Access_Equity.git
    cd MTC-Transit_Access_Equity
    ```
-````
 
 2. **Create a virtual environment**
 
