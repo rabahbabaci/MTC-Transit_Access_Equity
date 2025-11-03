@@ -40,12 +40,95 @@ footer {
 Team: Rabah Babaci &amp; Adithya Ayanam<br>
 Mentor: Metropolitan Transportation Commission (MTC)<br>
 Date: November 2025</p>
+<!-- ================= 1. Introduction and Motivation ================= -->
+<section id="introduction">
+  <h2>1. Introduction and Motivation</h2>
+  <p>
+    The San Francisco Bay Area is recognized for its diverse communities and complex transportation networks, yet many
+    residents—particularly those living in Equity Priority Communities (EPCs)—face barriers to accessing jobs, healthcare,
+    and essential services through public transit. Traditional transportation studies often measure accessibility in
+    static ways, assuming that travel times remain constant throughout the day. In reality, transit frequency, congestion,
+    and transfer availability change significantly between morning, midday, evening, and late-night hours. These temporal
+    differences can create hidden inequities that are not visible in conventional analyses.
+  </p>
+  <p>
+    This project, developed under the mentorship of the Metropolitan Transportation Commission (MTC), investigates how
+    transit accessibility varies across time and geography within Alameda County. The overarching goal is to provide
+    time-aware metrics that can help planners and policymakers design more equitable service schedules, reduce off-peak
+    isolation, and improve regional mobility for vulnerable populations.
+  </p>
+</section>
 
-<h2>Project Overview</h2>
-<p>Many Bay Area neighborhoods—especially Equity Priority Communities (EPCs)—face reduced transit access to jobs,
-groceries, and healthcare outside of rush hours. Traditional metrics ignore these time-of-day differences,
-masking inequities that worsen off-peak. This project, mentored by MTC, aims to inform policy and scheduling
-to improve service equity for EPC residents.</p>
+<!-- ============ 2. Objectives and Research Questions ============ -->
+<section id="objectives">
+  <h2>2. Objectives and Research Questions</h2>
+  <p>
+    The primary objective of this project is to evaluate transit accessibility in a way that reflects both spatial and
+    temporal equity. Specifically, the project aims to quantify how many jobs are reachable within specific t
+
+<!-- ===================== 5. Results and Findings ===================== -->
+<section id="results-findings">
+  <h2>5. Results and Findings</h2>
+  <p>
+    The preliminary analysis revealed several important findings. On average, Equity Priority Community (EPC) tracts could reach
+    approximately <strong>75,000</strong> more jobs within 30 minutes than non-EPC tracts, representing roughly a
+    <strong>22 percent</strong> higher accessibility level. These tracts are concentrated along the western corridor of Alameda County—
+    spanning <em>Berkeley, Oakland, and Hayward</em>—where transit density and job opportunities are highest.
+  </p>
+  <p>
+    In contrast, eastern tracts near <em>Livermore</em> and <em>Pleasanton</em> show significantly lower accessibility because of both reduced
+    transit coverage and greater spatial separation from employment centers. The boxplot and bar chart visualizations confirm a consistent
+    accessibility gap between EPC and non-EPC groups. All datasets passed quality validation: there were no missing geometries, and
+    population and EPC flag values were properly merged.
+  </p>
+</section>
+
+<!-- =========================== 6. Discussion ========================== -->
+<section id="discussion">
+  <h2>6. Discussion</h2>
+  <p>
+    The results suggest that while EPCs are often located closer to job centers, they still face challenges related to off-peak transit
+    frequency and schedule alignment. The current analysis, based on a static travel speed, captures spatial patterns but not temporal
+    variation. Once real GTFS data are integrated in the final phase, we expect to observe significant reductions in off-peak job access,
+    particularly in EPC tracts that depend on infrequent bus routes.
+  </p>
+  <p>
+    The work also highlights the value of open data and reproducible workflows in regional planning. Every step—from API data collection
+    to visualization—is scripted, enabling other students or agencies to replicate or extend the analysis.
+  </p>
+</section>
+
+<!-- =================== 7. Limitations and Future Work ================= -->
+<section id="limitations-future-work">
+  <h2>7. Limitations and Future Work</h2>
+  <p>
+    Several limitations remain at the midterm stage. The current model assumes a constant average travel speed of <strong>40 km/h</strong>,
+    which simplifies real-world transit variability. The accessibility metric is distance-based and does not yet account for walking,
+    waiting, or transfer times. Additionally, the analysis is limited to Alameda County, although the data architecture supports regional
+    scaling.
+  </p>
+  <p>Future work will expand on these foundations by:</p>
+  <ul>
+    <li>Incorporating <strong>511 GTFS</strong> feeds and building a multimodal <strong>R5py</strong> network model.</li>
+    <li>Generating <strong>15-, 30-, and 45-minute</strong> isochrones for four time periods (AM, Midday, PM, Late Night).</li>
+    <li>Visualizing accessibility change through <strong>Plotly</strong> time-sliders or <strong>Kepler.gl</strong> animations.</li>
+    <li>Interpreting results within a policy framework to propose transit schedule adjustments and equity-focused investments.</li>
+  </ul>
+</section>
+
+<!-- ============================ 8. Conclusion ========================= -->
+<section id="conclusion">
+  <h2>8. Conclusion</h2>
+  <p>
+    This midterm phase successfully built a clean, validated, and fully reproducible dataset for Alameda County and demonstrated clear
+    accessibility differences between EPC and non-EPC tracts. The integration of open data sources, transparent coding practices, and
+    visual storytelling establishes a strong technical foundation for the upcoming time-aware accessibility analysis.
+  </p>
+  <p>
+    By advancing from static to dynamic measures of transit equity, this work supports <em>Plan Bay Area 2050</em> goals of fostering
+    inclusive, sustainable, and data-driven transportation planning across the region.
+  </p>
+</section>
 
 <h2>Interactive Maps</h2>
 <iframe src="../visualizations/jobs_access_timeseries.html" title="Time-Aware Job Access"></iframe>
