@@ -64,7 +64,94 @@ Date: November 2025</p>
   <h2>2. Objectives and Research Questions</h2>
   <p>
     The primary objective of this project is to evaluate transit accessibility in a way that reflects both spatial and
-    temporal equity. Specifically, the project aims to quantify how many jobs are reachable within specific t
+    temporal equity. Specifically, the project aims to quantify how many jobs are reachable within specific travel-time
+    thresholds—15, 30, and 45 minutes—and to compare these metrics between EPC and non-EPC tracts in Alameda County.
+  </p>
+  <p>
+    Additional objectives include developing a reproducible workflow for processing and analyzing large geospatial
+    datasets, creating interactive and animated visualizations, and hosting a public storytelling webpage that
+    communicates findings clearly.
+  </p>
+  <p>The key research questions guiding this study are:</p>
+  <ul>
+    <li>How does transit accessibility differ by time of day (morning, midday, evening, and late night)?</li>
+    <li>Which census tracts and demographic groups, particularly EPCs, experience the greatest reduction in access during off-peak hours?</li>
+    <li>How can time-aware indicators support data-driven decisions about equitable transit service planning?</li>
+  </ul>
+</section>
+
+<!-- ============ 3. Data Sources and Description ============ -->
+<section id="data-sources">
+  <h2>3. Data Sources and Description</h2>
+  <p>
+    To explore these questions, we combined multiple datasets that describe both the social and spatial characteristics of
+    Alameda County. The MTC Plan Bay Area 2050 EPC Layer identifies census tracts that qualify as Equity Priority
+    Communities based on income, race, vehicle access, and linguistic isolation criteria. The U.S. Census TIGER/Line 2022
+    Tract Shapefiles provide the geographic boundaries necessary for spatial analysis. Socioeconomic indicators such as
+    population, income, and education were obtained from the American Community Survey (ACS 2018–2022 5-Year Estimates)
+    using the Census API.
+  </p>
+  <p>
+    Employment data came from the LEHD LODES Workplace Area Characteristics dataset, which lists the number of jobs by
+    tract. In future phases, General Transit Feed Specification (GTFS) feeds from 511 SF Bay and OpenStreetMap (OSM)
+    street networks will be integrated to construct time-aware transport models. All data were standardized to the WGS 84
+    coordinate system (EPSG:4326) and stored in the project’s <code>/data/raw</code> and
+    <code>/data/processed</code> directories for reproducibility.
+  </p>
+</section>
+
+<!-- ====================== 4. Methods and Workflow ====================== -->
+<section id="methods">
+  <h2>4. Methods and Workflow</h2>
+
+  <h3 id="methods-cleaning">4.1 Data Cleaning and Integration</h3>
+  <p>
+    The cleaning and integration phase established a unified dataset suitable for accessibility analysis. First, the
+    statewide TIGER/Line Tract Shapefile was filtered to include only Alameda County (<code>COUNTYFP = 001</code>).
+    Each tract’s 11-digit GEOID was standardized to ensure consistency across datasets. The MTC EPC Layer was then joined
+    to the tract geometry using this key, and an EPC flag (<code>is_epc = 1</code>) was created for tracts classified as
+    High, Higher, or Highest priority.
+  </p>
+  <p>
+    Next, demographic attributes such as total population and median income were merged from the ACS dataset. Missing
+    population values were flagged and filled with zero to preserve full tract coverage. Finally, all geometries were
+    reprojected to EPSG 4326 for mapping and web visualization. The cleaned GeoDataFrame contained 379 tracts, 97 of which
+    were EPCs and 282 non-EPCs. Validation confirmed that every geometry was valid and that there were no missing
+    identifiers.
+  </p>
+
+  <h3 id="methods-proxy">4.2 Preliminary Accessibility Proxy</h3>
+  <p>
+    Because time-specific GTFS data have not yet been integrated, a preliminary accessibility metric was calculated as a
+    proxy. The centroids of each tract were used to estimate potential job reachability within a 30-minute travel time
+    window, assuming an average effective speed of 40 km/h. This approach provided a first-order estimate of spatial access
+    differences across the county.
+  </p>
+  <p>
+    Employment densities were computed from the LODES Workplace Area Characteristics data and aggregated by tract. The
+    number of jobs reachable within the 30-minute threshold was then compared between EPC and non-EPC tracts. While
+    simplified, this proxy produced meaningful insights into the spatial structure of opportunity and will later be
+    replaced by dynamic, time-aware isochrones generated from R5py network models.
+  </p>
+
+  <h3 id="methods-viz">4.3 Visualization and Reproducibility</h3>
+  <p>
+    A major emphasis of the project is on transparent, reproducible analysis. All scripts are organized within
+    <code>/notebooks</code> and <code>/src</code> directories, and output files are automatically exported to
+    <code>/data/processed</code>, <code>/visualizations</code>, and <code>/results</code>.
+  </p>
+  <p>For the midterm phase, multiple visualization methods were used:</p>
+  <ul>
+    <li><strong>Interactive Folium Map:</strong> Displays Alameda County tracts, highlighting EPCs in red and non-EPCs in blue. Hover tooltips show GEOID, population, and EPC status.</li>
+    <li><strong>Choropleth Maps:</strong> Illustrate spatial variations in jobs reachable within 30 minutes.</li>
+    <li><strong>Boxplots and Bar Charts:</strong> Compare accessibility distributions between EPC and non-EPC tracts.</li>
+  </ul>
+  <p>
+    Each visualization was exported as either static PNG images or interactive HTML files to support embedding on the
+    public GitHub Pages site. This ensures that others can rerun the notebook and reproduce identical results.
+  </p>
+</section>
+
 
 <!-- ===================== 5. Results and Findings ===================== -->
 <section id="results-findings">
