@@ -55,40 +55,41 @@ target/
 .pixi
 .marimo/
 
-# ==========================================
-# Project-specific (CYPLAN 101 Track B)
-# ==========================================
 
-# --- Data folders ---
-# Ignore large raw data, but keep small documentation files
+# Project-specific (CYPLAN 101 Track B)
+
+# Data folders
+# Ignore large raw data, but keep lightweight documentation files
 data/raw/*
 !data/raw/README.md
 
-# Keep lightweight processed outputs
+# Keep lightweight processed outputs (GeoJSON, CSV)
 !data/processed/
 data/processed/*.zip
 data/processed/*.pbf
 
-# --- Visualizations ---
-# Keep .html/.png/.jpg maps for presentation
+# Visualizations
+# Keep maps and figures for presentation
 !visualizations/
 visualizations/*.tmp
 
-# --- Results / docs ---
-results/
-docs/
+# Results / Docs
+# Keep final reports and markdown summaries
+!results/
+!docs/
+results/*.tmp
 
-# --- Environment / secrets ---
+# Environment / secrets
 .env
 *.key
 *.pem
 
-# --- Reports ---
-# Only include official midterm/final report
+# Reports
+# Only exclude unrelated PDFs (keep report.pdf)
 *.pdf
-!report.pdf
+!results/report.pdf
 
-# --- OS / Editor files ---
+# OS / Editor files
 .DS_Store
 Thumbs.db
 .vscode/

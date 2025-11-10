@@ -1,0 +1,8 @@
+Column | Description | Example
+---------|-------------|----------
+GEOID | Census tract ID | 06001400100
+is_epc | 1 if Equity Priority Community | 0
+population | Total population (ACS) | 4295
+geometry | Census tract boundary | POLYGON(...)
+CRS | EPSG:4326 (WGS84)
+jobs_30min | Estimated number of jobs reachable within 30 minutes | 421795
