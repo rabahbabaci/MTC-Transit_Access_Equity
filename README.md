@@ -135,7 +135,7 @@ Then run:
 jupyter nbconvert notebooks/transit_access_equity_midterm.ipynb \
     --to webpdf \
     --output-dir results \
-    --output report.pdf
+    --output report
 ```
 
 ### Optional — HTML version
