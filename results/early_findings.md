@@ -1,48 +1,52 @@
 
 # 7. Early Findings & Notes
 
-- **Spatial pattern (map)**
-  - EPC tracts cluster along the West County corridor (Berkeley–Oakland–San Leandro–Hayward) near I-80/I-880 and major transit lines; fewer EPC tracts in the east (Castro Valley–Dublin–Pleasanton–Livermore).
-  - EPC areas align with older, denser neighborhoods and job centers; non-EPC tracts dominate suburban/eastern parts of the county.
+- **Spatial patterns (maps)**
+  - EPC tracts cluster along the West County corridor (Berkeley → Oakland → San Leandro → Hayward), close to major job centers and dense transit service.
+  - Eastern Alameda County (Dublin, Pleasanton, Livermore) is overwhelmingly non-EPC and shows lower accessibility in the pilot metric.
 
-- **Accessibility pilot (jobs ≤ 30 min, 40 km/h proxy)**
-  - Sampled EPC tracts averaged ~380 k reachable jobs, vs ~330 k for non-EPC (~+15 % gap).
-  - *Interpretation:* EPC tracts are generally closer to employment clusters, even with a simple centroid-distance proxy.
+- **Pilot accessibility results (jobs ≤30 minutes, centroid proxy)**
+  - EPC tracts reach roughly **420k–450k jobs**, while non-EPC tracts average around **340k–365k**.
+  - *Interpretation:* even with a simplified straight-line model, EPC areas appear more connected to employment clusters.
 
 - **Population context**
-  - Many EPC tracts have moderate to high population; pairing high population with higher job accessibility suggests strong demand for transportation and services.
+  - EPC tracts generally have moderate to high population, aligning high population with high job accessibility and indicating strong demand for reliable transit options.
+  - Non-EPC areas with lower accessibility are often lower-density, auto-oriented communities.
 
 - **Data joins & keys**
-  - Consistent 11-digit GEOID was crucial. We rebuilt GEOIDs via zero-padding (state = 2, county = 3, tract = 6) to merge TIGER tracts + EPC + ACS + LODES without mismatches.
-  - LODES raw WAC required block→tract aggregation (`w_geocode` → first 11 chars; sum `C000`).
+  - GEOIDs required consistent zero-padding (state–county–tract = 11 digits).
+  - LODES WAC data needed block → tract aggregation (`w_geocode` → first 11 digits, sum `C000`).
 
-- **Map takeaways for planning**
-  - EPC corridors overlap areas where EV charging + transit integration could serve many residents and jobs.
-  - Non-EPC eastern tracts show lower accessibility—candidates for first/last-mile or targeted job access strategies.
+- **Planning takeaways**
+  - Strong accessibility in EPC corridors highlights where transit or EV charging integration would serve the most people.
+  - Lower-access non-EPC suburban tracts point to potential gaps for first/last-mile improvements or demand-response services.
 
-- **Limitations (methods)**
-  - Travel time proxy uses straight-line centroid distance and constant speed (no network or congestion effects).
-  - LODES year = 2021 (post-COVID shifts possible).
-  - EPC flag simplified (class labels). Threshold sensitivity could be tested.
+- **Method limitations (pilot metric only)**
+  - Straight-line distance with constant 40 km/h speed ignores actual road network and transit schedules.
+  - LODES data (2021) may reflect post-COVID changes in job locations.
+  - Final accessibility results will use **R5-based, time-specific travel times** rather than centroid approximations.
 
 - **Quality checks**
-  - CRS harmonized to EPSG:4326 for storage; EPSG:26910 for distance.
-  - Visual inspection shows clean tract coverage and EPC highlighting where expected (west county urban core).
+  - CRS standardized to EPSG:4326 for mapping and EPSG:26910 for distance calculations.
+  - All geometries validated; EPC tags and population attributes merged cleanly across sources.
 
-**Quantitative Results**
+**Quantitative Summary**
 
-| Group | Tract Count | Mean Jobs ≤ 30 min | Median | Min | Max |
-|:------|-------------:|------------------:|-------:|----:|----:|
-| **EPC** | 97 | **419 217** | **421 795** | 321 849 | 482 405 |
-| **Non-EPC** | 282 | **344 052** | **365 831** | 53 305 | 488 078 |
+| Group | Tract Count | Mean Jobs ≤30 min | Median | Min | Max |
+|------:|------------:|------------------:|-------:|----:|----:|
+| **EPC**     | 97  | 419k | 422k | 322k | 482k |
+| **Non-EPC** | 282 | 344k | 366k | 53k  | 488k |
 
-*Interpretation:* EPC tracts can reach ≈ 75 000 more jobs within 30 minutes than non-EPCs (~22 % higher accessibility), reflecting stronger links to employment along the western corridor (Berkeley–Oakland–San Leandro–Hayward).
+**Interpretation:**  
+EPC tracts can access **~75k more jobs** within 30 minutes than non-EPC tracts (≈22% higher), suggesting their proximity to major job corridors.
 
-**Boxplot Interpretation**
-- EPC tracts show higher medians and tighter spread → consistently high accessibility.  
-- Non-EPC tracts show wider variance → mixed access and suburban isolation.
+**Boxplot interpretation**
+- EPC tracts show higher medians and a more compact range.
+- Non-EPC tracts show a wider spread and much lower minimums, reflecting suburban isolation.
 
-**Key Takeaway**
-EPC-designated tracts exhibit substantially higher job access within 30 minutes, highlighting transit and charging-equity needs in lower-access (non-EPC) areas.
+**Key early takeaway**
+EPC tracts show consistently strong job accessibility even under a simple model, while non-EPC suburban areas lag behind.  
+The final phase will evaluate whether these gaps persist once we use **network-based, time-aware isochrones** for AM peak vs. late night.
 
-**Data sources:** MTC Plan Bay Area 2050 (EPC), US Census TIGER/ACS 2022, LODES 2021 (LEHD).
+**Data sources:**  
+MTC Plan Bay Area 2050 (EPC), US Census TIGER/ACS 2022, LEHD LODES 2021 (WAC).
