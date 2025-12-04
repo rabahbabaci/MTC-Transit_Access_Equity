@@ -32,7 +32,6 @@ coverage.xml
 cython_debug/
 .mypy_cache/
 .dmypy.json
-.dmypy.json
 .ruff_cache/
 __pypackages__/
 .env
@@ -56,25 +55,26 @@ target/
 .marimo/
 
 
+# ==========================================
 # Project-specific (CYPLAN 101 Track B)
+# ==========================================
 
-# Data folders
-# Ignore large raw data, but keep lightweight documentation files
+# Raw data (large datasets should not be committed)
 data/raw/*
 !data/raw/README.md
 
-# Keep lightweight processed outputs (GeoJSON, CSV)
+# Processed data (keep smaller files, ignore large binaries)
 !data/processed/
-data/processed/*.zip
 data/processed/*.pbf
+data/processed/*.zip
+!data/processed/*.geojson
+!data/processed/*.csv
 
 # Visualizations
-# Keep maps and figures for presentation
 !visualizations/
 visualizations/*.tmp
 
 # Results / Docs
-# Keep final reports and markdown summaries
 !results/
 !docs/
 results/*.tmp
@@ -84,8 +84,7 @@ results/*.tmp
 *.key
 *.pem
 
-# Reports
-# Only exclude unrelated PDFs (keep report.pdf)
+# Reports (keep only final PDF)
 *.pdf
 !results/report.pdf
 
