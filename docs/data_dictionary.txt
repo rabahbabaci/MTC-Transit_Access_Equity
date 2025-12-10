@@ -1,11 +1,34 @@
 Column | Description | Example
 ---------|-------------|----------
-GEOID | Census tract ID | 06001400100
-is_epc | 1 if Equity Priority Community | 0
+GEOID | Census tract ID (11-digit FIPS) | 06001400100
+is_epc | 1 if Equity Priority Community (MTC) | 0
 population | ACS 2018–2022 population | 4295
 geometry | Tract boundary (EPSG:4326) | POLYGON(...)
-jobs | LODES 2021 workplace jobs | 12521
-jobs_30min | Pilot metric: centroid 30-min jobs | 421795
-am_peak_30min | R5 AM Peak job accessibility | 93818
-late_30min | R5 Late Night job accessibility | 73075
-Δ_30min_% | Percent change (Late vs AM) | -22.1
+
+jobs | Total LODES 2021 workplace jobs (C000) | 12521
+
+jobs_30min | Pilot metric: estimated jobs reachable in 30 min (centroid proxy) | 421795
+
+am_peak_min | R5 travel time in minutes (AM Peak 7:30–8:30) | 34.0
+late_night_min | R5 travel time in minutes (Late Night 22:00–23:00) | 45.0
+off_peak_delay_min | Late Night minus AM Peak travel time | 11.0
+
+jobs_am_peak_15min | Jobs reachable within 15 min during AM Peak | 451
+jobs_am_peak_30min | Jobs reachable within 30 min during AM Peak | 93818
+jobs_am_peak_45min | Jobs reachable within 45 min during AM Peak | 227323
+
+jobs_late_night_15min | Jobs reachable within 15 min during Late Night | 451
+jobs_late_night_30min | Jobs reachable within 30 min during Late Night | 73075
+jobs_late_night_45min | Jobs reachable within 45 min during Late Night | 164564
+
+Δ_15min_% | Percent change in job access (Late vs AM) | 0.0
+Δ_30min_% | Percent change in job access (Late vs AM) | -22.1
+Δ_45min_% | Percent change in job access (Late vs AM) | -27.6
+
+city | Assigned city label based on centroid | Oakland
+pretty_name | City plus EPC label | Oakland (EPC)
+
+minutes | Isochrone threshold (15, 30, 45) | 30
+period | Time period for isochrone (AM Peak or Late Night) | AM Peak
+origin_id | GEOID of origin tract | 06001402200
+origin_name | Name or label for origin tract | 06001402200
