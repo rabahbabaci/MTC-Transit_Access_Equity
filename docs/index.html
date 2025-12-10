@@ -141,4 +141,64 @@
         <h3>3.2 Visualization of Aggregate Results</h3>
         
         <h4>Figure 1: Box Plot of Accessibility Distribution</h4>
-        <p>This box plot provides the statistical evidence, showing that the entire distribution of job access shifts downward more severely for EPCs during the Late Night
+        <p>This box plot provides the statistical evidence, showing that the entire distribution of job access shifts downward more severely for EPCs during the Late Night period, visually confirming the 8.3-percentage-point equity gap.</p>
+        <div class="figure-placeholder">
+            [Interactive Box Plot Placeholder: Figure 1 comparing the distribution of jobs reachable for EPC and Non-EPC tracts across AM Peak and Late Night periods]
+        </div>
+
+        <h4>Figure 2: Choropleth Map of Accessibility Change ($\Delta$ %)</h4>
+        <p>This map confirms the geographical concentration of the penalty. The deepest red areas (most severe loss) are clustered in key EPC corridors in East and West Oakland, confirming the direct link between service contraction and equity loss. </p>
+
+        <h3>3.3 Interactive Explorer: Visualizing Time and Threshold Disparity</h3>
+        <p>This explorer is an advanced visualization showing transit isochrones for six representative origins (three EPC, three non-EPC) that allows users to toggle travel time thresholds (15/30/45 minute) and compare AM Peak (Solid Polygons) versus Late Night (Dashed Polygons) reach.</p>
+        <p>The map highlights how **EPC origins** often retain broader geographical reach during Late Night due to proximity to core high-frequency corridors, while **non-EPC areas** may experience a sharp reduction in area, demonstrating the complexity beyond aggregate loss figures.</p>
+        <div class="figure-placeholder">
+            [Interactive/Animated Map Placeholder: Full Isochrone Explorer with Time and Threshold Controls (Track B Animated Deliverable)]
+        </div>
+
+        <h3>3.4 Supplementary Visualization: Paired Maps and Bar Chart</h3>
+        <p>The paired visualization highlights two key dimensions for the six representative tracts: **Left Map** shows the absolute $Jobs_{AM\ Peak}$ reach (baseline), and the **Right Map** shows the $\Delta$ % Late Night Impact (Loss/Gain). The analysis shows EPC areas like Oakland experience major late-night accessibility losses (deep blue), while certain southern Alameda tracts show anomalous gains (red), likely due to reduced traffic congestion.</p>
+        <div class="figure-placeholder">
+            [Paired Map/Bar Chart Placeholder: AM Peak Reach vs. Late Night Impact (% Change) for 6 Sample Tracts]
+        </div>
+
+        <h2>4. Limitations and Policy Recommendations</h2>
+
+        <h3>4.1 Limitations</h3>
+        <ol>
+            <li>**Scheduled vs. Effective Service:** Reliance on **GTFS scheduled data** ignores real-world unreliability (late arrivals/cancellations), likely **underestimating** the Late Night penalty.</li>
+            <li>**Static Job Data:** Use of **LODES WAC data** does not account for the availability of jobs during late-night hours or capture the gig economy.</li>
+            <li>**Cost and Safety Exclusion:** The model excludes unmeasured barriers like **transit fares** and **late-night safety concerns** which disproportionately burden low-income EPC riders.</li>
+        </ol>
+
+        <h3>4.2 Policy Recommendations</h3>
+        <ol>
+            <li>**Mandate Time-Aware Equity Reporting (KPI Reform):** Formally integrate the **Late Night/Off-Peak Loss ($\Delta$ %)** metric into MTC's performance reporting to shift focus from peak-hour success to evaluating service contraction penalties.</li>
+            <li>**Targeted Service Investment:** Prioritize operational funding to significantly **increase service frequency and span** (run later) on lines serving the high-loss EPC corridors. </li>
+            <li>**Strategic Subsidized Micro-Mobility:** Implement pilot programs for **subsidized micro-transit** in low-density EPC areas to cover the critical first/last-mile gap, addressing both late-night access and safety concerns.</li>
+        </ol>
+
+        <h2>5. Conclusion and Future Work</h2>
+
+        <h3>5.1 Conclusion</h3>
+        <p>This study quantified the temporal equity gap: the **8.3-percentage-point equity gap** (32.3% vs. 24.0% loss) suffered by EPC tracts during late-night hours. By validating the $\Delta$ % metric, this research provides the MTC with a necessary tool to mandate time-aware KPIs and guide strategic, high-impact service investments.</p>
+
+        <h3>5.2 Future Work</h3>
+        <ol>
+            <li>**Regional Expansion:** Scale the R5 model to the entire Bay Area to assess the consistency of the equity gap across the nine counties.</li>
+            <li>**Reliability Integration:** Incorporate real-time AVL data to model **effective accessibility**, accounting for service cancellations and delays.</li>
+            <li>**Cost-Benefit Analysis:** Model the direct costs and benefits of extending service span in high-loss EPC corridors to guide operational budgeting.</li>
+        </ol>
+
+        <h2>References</h2>
+        <ul>
+            <li>Metropolitan Transportation Commission (MTC) — **Equity Priority Communities (PBA 2050)**</li>
+            <li>U.S. Census Bureau — **TIGER/Line Shapefiles** and **ACS 2018–2022**</li>
+            <li>511 SF Bay Open Data — **GTFS Transit Feeds**</li>
+            <li>Urban Institute / U.S. Census LEHD — **LODES Workplace Area Characteristics (WAC)**</li>
+            <li>r5py Documentation — https://r5py.readthedocs.io</li>
+            <li>Python Libraries: GeoPandas, pandas, NumPy, matplotlib, folium</li>
+        </ul>
+    </div>
+</body>
+</html>
