@@ -1,253 +1,144 @@
-<!doctype html><meta charset="utf-8">
-<title>Transit Access Equity — CYPLAN 101 Track B</title>
-<style>
-body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem auto;
-  max-width: 90ch;
-  line-height: 1.5;
-  background-color: #fafafa;
-  color: #222;
-}
-h1, h2 {
-  color: #004b87;
-}
-iframe {
-  width: 100%;
-  height: 600px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-img {
-  width: 100%;
-  border-radius: 8px;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  border: 1px solid #ddd;
-}
-footer {
-  margin-top: 2rem;
-  font-size: 0.9em;
-  color: #555;
-  text-align: center;
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transit Access Equity: Time-Aware Isochrones in the Bay Area</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+        }
+        header {
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #007bff;
+            font-size: 2.2em;
+            margin-bottom: 5px;
+        }
+        h2 {
+            color: #004d99;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #007bff;
+            margin-top: 20px;
+        }
+        .meta-info {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+        .code-block {
+            background-color: #e9ecef;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .figure-placeholder {
+            border: 2px dashed #007bff;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            background-color: #f0f8ff;
+            font-style: italic;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Transit Access Equity: Time-Aware Isochrones in the Bay Area</h1>
+            <p class="meta-info">
+                **CYPLAN 101 — Group 4 (Track B: Advanced)** | **Team:** Rabah Babaci & Adithya Ayanam | **Mentor:** Metropolitan Transportation Commission (MTC)
+            </p>
+        </header>
 
-<h1>🚆 Transit Access Equity: Time-Aware Isochrones in the Bay Area</h1>
-<p><b>CYPLAN 101 — Group 4 (Track B Advanced)</b><br>
-Team: Rabah Babaci &amp; Adithya Ayanam<br>
-Mentor: Metropolitan Transportation Commission (MTC)<br>
-Date: November 2025</p>
-<!-- ================= 1. Introduction and Motivation ================= -->
-<section id="introduction">
-  <h2>1. Introduction and Motivation</h2>
-  <p>
-    The San Francisco Bay Area is recognized for its diverse communities and complex transportation networks, yet many
-    residents—particularly those living in Equity Priority Communities (EPCs)—face barriers to accessing jobs, healthcare,
-    and essential services through public transit. Traditional transportation studies often measure accessibility in
-    static ways, assuming that travel times remain constant throughout the day. In reality, transit frequency, congestion,
-    and transfer availability change significantly between morning, midday, evening, and late-night hours. These temporal
-    differences can create hidden inequities that are not visible in conventional analyses.
-  </p>
-  <p>
-    This project, developed under the mentorship of the Metropolitan Transportation Commission (MTC), investigates how
-    transit accessibility varies across time and geography within Alameda County. The overarching goal is to provide
-    time-aware metrics that can help planners and policymakers design more equitable service schedules, reduce off-peak
-    isolation, and improve regional mobility for vulnerable populations.
-  </p>
-</section>
+        <h2>Abstract</h2>
+        <p>This study investigates temporal disparities in transit accessibility within Alameda County, California, focusing on Equity Priority Communities (EPCs). Using a non-trivial spatio-temporal modeling approach that integrates General Transit Feed Specification (GTFS) schedule data, pedestrian networks from OpenStreetMap, and employment data from the Longitudinal Employer-Household Dynamics (LEHD) program, we conduct a comparative analysis of job accessibility (jobs reachable within 30 minutes) during AM Peak (7:30–8:30 AM) and Late Night (10:00–11:00 PM) periods.</p>
+        <p>Our findings reveal a substantial time-of-day equity gap: EPC tracts suffer an average **32.3% reduction** in reachable employment opportunities, significantly exceeding the **24.0% reduction** observed in non-EPC tracts. This **8.3-percentage-point equity gap** demonstrates that conventional static accessibility measures obscure significant temporal inequities that disproportionately affect transit-dependent populations. Policy recommendations call for integrating time-aware metrics into regional planning mandates and targeting service investments to EPC corridors most affected by off-peak service contraction. </p>
 
-<!-- ============ 2. Objectives and Research Questions ============ -->
-<section id="objectives">
-  <h2>2. Objectives and Research Questions</h2>
-  <p>
-    The primary objective of this project is to evaluate transit accessibility in a way that reflects both spatial and
-    temporal equity. Specifically, the project aims to quantify how many jobs are reachable within specific travel-time
-    thresholds—15, 30, and 45 minutes—and to compare these metrics between EPC and non-EPC tracts in Alameda County.
-  </p>
-  <p>
-    Additional objectives include developing a reproducible workflow for processing and analyzing large geospatial
-    datasets, creating interactive and animated visualizations, and hosting a public storytelling webpage that
-    communicates findings clearly.
-  </p>
-  <p>The key research questions guiding this study are:</p>
-  <ul>
-    <li>How does transit accessibility differ by time of day (morning, midday, evening, and late night)?</li>
-    <li>Which census tracts and demographic groups, particularly EPCs, experience the greatest reduction in access during off-peak hours?</li>
-    <li>How can time-aware indicators support data-driven decisions about equitable transit service planning?</li>
-  </ul>
-</section>
+        <h2>1. Introduction: Context, Motivation, Objectives, and Research Questions</h2>
+        
+        <h3>1.1 Context and Motivation</h3>
+        <p>Traditional transportation planning in the Bay Area relies heavily on **static, AM Peak accessibility metrics** to assess mobility. This approach fails to capture the true mobility challenges faced by residents of **Equity Priority Communities (EPCs)**, who are disproportionately dependent on transit. When service frequency and span decline significantly during off-peak and late-night hours, these communities experience a severe contraction of accessible employment opportunities. This project is motivated by the need to quantify this **temporal inequity** using a time-aware analysis to inform better policy and targeted service improvements.</p>
 
-<!-- ============ 3. Data Sources and Description ============ -->
-<section id="data-sources">
-  <h2>3. Data Sources and Description</h2>
-  <p>
-    To explore these questions, we combined multiple datasets that describe both the social and spatial characteristics of
-    Alameda County. The MTC Plan Bay Area 2050 EPC Layer identifies census tracts that qualify as Equity Priority
-    Communities based on income, race, vehicle access, and linguistic isolation criteria. The U.S. Census TIGER/Line 2022
-    Tract Shapefiles provide the geographic boundaries necessary for spatial analysis. Socioeconomic indicators such as
-    population, income, and education were obtained from the American Community Survey (ACS 2018–2022 5-Year Estimates)
-    using the Census API.
-  </p>
-  <p>
-    Employment data came from the LEHD LODES Workplace Area Characteristics dataset, which lists the number of jobs by
-    tract. In future phases, General Transit Feed Specification (GTFS) feeds from 511 SF Bay and OpenStreetMap (OSM)
-    street networks will be integrated to construct time-aware transport models. All data were standardized to the WGS 84
-    coordinate system (EPSG:4326) and stored in the project’s <code>/data/raw</code> and
-    <code>/data/processed</code> directories for reproducibility.
-  </p>
-</section>
+        <h3>1.2 Objectives and Scope</h3>
+        <p>The **Objective** is to conduct a non-trivial spatio-temporal analysis to quantify the difference in job accessibility between peak and off-peak periods and measure the resulting mobility penalty on EPCs in Alameda County.</p>
+        <p>The **Scope** is defined as:</p>
+        <ul>
+            <li>**Geographic Focus:** Alameda County.</li>
+            <li>**Equity Focus:** Comparative analysis between EPC and non-EPC census tracts.</li>
+            <li>**Temporal Comparison:** AM Peak (7:30–8:30 AM) vs. Late Night (10:00–11:00 PM).</li>
+        </ul>
+        
+        <h3>1.3 Research Questions</h3>
+        <ol>
+            <li>How does **transit job accessibility** differ between **AM peak** and **late-night** periods for all tracts?</li>
+            <li>Which groups, particularly **EPCs**, experience the largest off-peak reductions (the mobility penalty)?</li>
+            <li>How can the resulting **time-aware indicators** inform service planning and scheduling improvements for high-impact EPC corridors?</li>
+        </ol>
 
-<!-- ====================== 4. Methods and Workflow ====================== -->
-<section id="methods">
-  <h2>4. Methods and Workflow</h2>
+        <h2>2. Data and Methodology (Technical Report)</h2>
 
-  <h3 id="methods-cleaning">4.1 Data Cleaning and Integration</h3>
-  <p>
-    The cleaning and integration phase established a unified dataset suitable for accessibility analysis. First, the
-    statewide TIGER/Line Tract Shapefile was filtered to include only Alameda County (<code>COUNTYFP = 001</code>).
-    Each tract’s 11-digit GEOID was standardized to ensure consistency across datasets. The MTC EPC Layer was then joined
-    to the tract geometry using this key, and an EPC flag (<code>is_epc = 1</code>) was created for tracts classified as
-    High, Higher, or Highest priority.
-  </p>
-  <p>
-    Next, demographic attributes such as total population and median income were merged from the ACS dataset. Missing
-    population values were flagged and filled with zero to preserve full tract coverage. Finally, all geometries were
-    reprojected to EPSG 4326 for mapping and web visualization. The cleaned GeoDataFrame contained 379 tracts, 97 of which
-    were EPCs and 282 non-EPCs. Validation confirmed that every geometry was valid and that there were no missing
-    identifiers.
-  </p>
+        <h3>2.1 Preparation of Origin Data: Alameda County Tract Master File</h3>
+        <p>The initial methodological step was the construction of the final origin layer, a tract-level master dataset for Alameda County, essential for ensuring data integrity and consistency throughout the time-aware accessibility analysis. This process began by filtering the raw TIGER/Line Shapefiles to isolate only the geometries corresponding to Alameda County and standardizing all geographic identifiers to the **11-digit GEOID** string format, which facilitated reliable merging with external data sources. The cleaned tract geometries were then augmented by merging the Metropolitan Transportation Commission’s Equity Priority Community (EPC) designations, creating the primary comparative variable, and integrating relevant American Community Survey (ACS) population fields to provide a demographic context. As a measure of quality control, tracts with suppressed or missing ACS population values were explicitly flagged, thereby ensuring transparency in later normalization steps. Finally, the geometries were validated to share a **consistent Coordinate Reference System (CRS)** to preserve spatial integrity, thus finalizing the master dataset for use as the origin points in the R5 routing engine.</p>
 
-  <h3 id="methods-proxy">4.2 Preliminary Accessibility Proxy</h3>
-  <p>
-    Because time-specific GTFS data have not yet been integrated, a preliminary accessibility metric was calculated as a
-    proxy. The centroids of each tract were used to estimate potential job reachability within a 30-minute travel time
-    window, assuming an average effective speed of 40 km/h. This approach provided a first-order estimate of spatial access
-    differences across the county.
-  </p>
-  <p>
-    Employment densities were computed from the LODES Workplace Area Characteristics data and aggregated by tract. The
-    number of jobs reachable within the 30-minute threshold was then compared between EPC and non-EPC tracts. While
-    simplified, this proxy produced meaningful insights into the spatial structure of opportunity and will later be
-    replaced by dynamic, time-aware isochrones generated from R5py network models.
-  </p>
+        <h3>2.2 Finalization of Origin Data and Geospatial Preparation</h3>
+        <p>The subsequent step in the data preparation workflow involved building and finalizing the core GeoDataFrame for Alameda County, which was necessary for both the visualization and the input parameters of the time-aware accessibility model. This process commenced by selecting only the required columns from the previously merged dataset, streamlining the file to essential geographic and attribute fields. The geometric integrity of the data was then finalized by confirming and setting the Coordinate Reference System (CRS) to the global standard **EPSG:4326**, which is the required projection for the R5 routing engine. Crucially, the dataset was validated to ensure consistency in row counts and geometry types, while the `population_missing` flag was carefully preserved to maintain transparency regarding tracts where ACS data was suppressed or incomplete. The final cleaned GeoDataFrame was then saved, marking its readiness for the network modeling phase.</p>
 
-  <h3 id="methods-viz">4.3 Visualization and Reproducibility</h3>
-  <p>
-    A major emphasis of the project is on transparent, reproducible analysis. All scripts are organized within
-    <code>/notebooks</code> and <code>/src</code> directories, and output files are automatically exported to
-    <code>/data/processed</code>, <code>/visualizations</code>, and <code>/results</code>.
-  </p>
-  <p>For the midterm phase, multiple visualization methods were used:</p>
-  <ul>
-    <li><strong>Interactive Folium Map:</strong> Displays Alameda County tracts, highlighting EPCs in red and non-EPCs in blue. Hover tooltips show GEOID, population, and EPC status.</li>
-    <li><strong>Choropleth Maps:</strong> Illustrate spatial variations in jobs reachable within 30 minutes.</li>
-    <li><strong>Boxplots and Bar Charts:</strong> Compare accessibility distributions between EPC and non-EPC tracts.</li>
-  </ul>
-  <p>
-    Each visualization was exported as either static PNG images or interactive HTML files to support embedding on the
-    public GitHub Pages site. This ensures that others can rerun the notebook and reproduce identical results.
-  </p>
-</section>
+        <h3>2.3 Analytical Framework</h3>
+        <p>The foundation of the analysis is the creation of a realistic transportation model using the **R5 routing engine** (via the `r5py` library), integrating scheduled public transit (GTFS) with the pedestrian street network (OSM). The **Cumulative Opportunity Accessibility** metric was defined as the total number of jobs (LODES WAC) reachable within a maximum travel time budget of **30 minutes** from each origin tract.</p>
+        <p>The core equity metric is the **Percent Change in Jobs Reachable ($\Delta$ %)**, calculated for every census tract:</p>
+        <div class="code-block" style="text-align: center;">
+            $$\Delta_{\%} = \frac{Jobs_{Late\ Night} - Jobs_{AM\ Peak}}{Jobs_{AM\ Peak}} \times 100$$
+        </div>
+        <p>This $\Delta$ % metric serves as the primary indicator of **temporal equity loss** and was used for statistical and spatial comparison between EPC and Non-EPC tracts. </p>
 
-<!-- ===================== 5. Results and Findings ===================== -->
-<section id="results-findings">
-  <h2>5. Results and Findings</h2>
-  <p>
-    The preliminary analysis revealed several important findings. On average, Equity Priority Community (EPC) tracts could reach
-    approximately <strong>75,000</strong> more jobs within 30 minutes than non-EPC tracts, representing roughly a
-    <strong>22 percent</strong> higher accessibility level. These tracts are concentrated along the western corridor of Alameda County—
-    spanning <em>Berkeley, Oakland, and Hayward</em>—where transit density and job opportunities are highest.
-  </p>
-  <p>
-    In contrast, eastern tracts near <em>Livermore</em> and <em>Pleasanton</em> show significantly lower accessibility because of both reduced
-    transit coverage and greater spatial separation from employment centers. The boxplot and bar chart visualizations confirm a consistent
-    accessibility gap between EPC and non-EPC groups. All datasets passed quality validation: there were no missing geometries, and
-    population and EPC flag values were properly merged.
-  </p>
-  <h2>Interactive Maps</h2>
-    <iframe src="https://raw.githubusercontent.com/rabahbabaci/MTC-Transit_Access_Equity/feature/pages-site/docs/visualizations/epc_map.html" title="EPC vs Non-EPC Map"></iframe>  
-    
-  <h2>Static Results</h2>
-  <figure>
-    <img
-      src="https://raw.githubusercontent.com/rabahbabaci/MTC-Transit_Access_Equity/feature/pages-site/docs/visualizations/jobs30_map.png"
-      alt="Accessibility Map (30 min)" style="max-width:100%;height:auto" loading="lazy">
-    <figcaption>Accessibility Map (30 min)</figcaption>
-  </figure>
-  
-  <figure>
-    <img
-      src="https://raw.githubusercontent.com/rabahbabaci/MTC-Transit_Access_Equity/feature/pages-site/docs/visualizations/jobs30_boxplot.png"
-      alt="Boxplot of Accessibility Metrics" style="max-width:100%;height:auto" loading="lazy">
-    <figcaption>Boxplot of Accessibility Metrics</figcaption>
-  </figure>
-</section>
+        <h2>3. Results and Findings</h2>
 
-<!-- =========================== 6. Discussion ========================== -->
-<section id="discussion">
-  <h2>6. Discussion</h2>
-  <p>
-    The results suggest that while EPCs are often located closer to job centers, they still face challenges related to off-peak transit
-    frequency and schedule alignment. The current analysis, based on a static travel speed, captures spatial patterns but not temporal
-    variation. Once real GTFS data are integrated in the final phase, we expect to observe significant reductions in off-peak job access,
-    particularly in EPC tracts that depend on infrequent bus routes.
-  </p>
-  <p>
-    The work also highlights the value of open data and reproducible workflows in regional planning. Every step—from API data collection
-    to visualization—is scripted, enabling other students or agencies to replicate or extend the analysis.
-  </p>
-</section>
+        <h3>3.1 Quantitative Finding: The Disproportionate Loss</h3>
+        <p>The analysis confirmed a substantial time-of-day equity gap:</p>
+        <ul>
+            <li>**EPC Penalty:** EPC tracts experienced an average accessibility reduction of **32.3%**.</li>
+            <li>**Non-EPC Reduction:** Non-EPC tracts saw an average reduction of **24.0%**.</li>
+            <li>**Equity Gap:** This **8.3 percentage point difference** confirms the disproportionate temporal mobility penalty.</li>
+        </ul>
 
-<!-- =========================== 7. Policy Recommendations ========================== -->
-<section id="policy-recs">
-  <h2>7. Policy Recommendations</h2>
-  <ul>
-    <li>Increase <strong>off-peak headways</strong> on EPC-serving corridors with largest access gaps.</li>
-    <li>Coordinate <strong>timed transfers</strong> at key hubs after 8 PM to reduce wait penalties.</li>
-    <li>Pilot <strong>late-evening microtransit</strong> in low-frequency EPC tracts (Livermore/Pleasanton edges).</li>
-    <li>Prioritize <strong>shelters/lighting</strong> at stops identified by the late-night access deficit map.</li>
-  </ul>
-</section>
-
-<!-- =================== 8. Limitations and Future Work ================= -->
-<section id="limitations-future-work">
-  <h2>8. Limitations and Future Work</h2>
-  <p>
-    Several limitations remain at the midterm stage. The current model assumes a constant average travel speed of <strong>40 km/h</strong>,
-    which simplifies real-world transit variability. The accessibility metric is distance-based and does not yet account for walking,
-    waiting, or transfer times. Additionally, the analysis is limited to Alameda County, although the data architecture supports regional
-    scaling.
-  </p>
-  <p>Future work will expand on these foundations by:</p>
-  <ul>
-    <li>Incorporating <strong>511 GTFS</strong> feeds and building a multimodal <strong>R5py</strong> network model.</li>
-    <li>Generating <strong>15-, 30-, and 45-minute</strong> isochrones for four time periods (AM, Midday, PM, Late Night).</li>
-    <li>Visualizing accessibility change through <strong>Plotly</strong> time-sliders or <strong>Kepler.gl</strong> animations.</li>
-    <li>Interpreting results within a policy framework to propose transit schedule adjustments and equity-focused investments.</li>
-  </ul>
-</section>
-
-<!-- ============================ 9. Conclusion ========================= -->
-<section id="conclusion">
-  <h2>9. Conclusion</h2>
-  <p>
-    This midterm phase successfully built a clean, validated, and fully reproducible dataset for Alameda County and demonstrated clear
-    accessibility differences between EPC and non-EPC tracts. The integration of open data sources, transparent coding practices, and
-    visual storytelling establishes a strong technical foundation for the upcoming time-aware accessibility analysis.
-  </p>
-  <p>
-    By advancing from static to dynamic measures of transit equity, this work supports <em>Plan Bay Area 2050</em> goals of fostering
-    inclusive, sustainable, and data-driven transportation planning across the region.
-  </p>
-</section>
- 
-<h2>Documentation</h2>
-<p>For detailed methodology, preprocessing, and data sources, read the
-<a href="../results/report.pdf">Midterm Report (PDF)</a>.</p>
-
-<footer>
-<p>© 2025 CYPLAN 101 Group 4 · University of California, Berkeley · Mentor: MTC</p>
-</footer>
+        <h3>3.2 Visualization of Aggregate Results</h3>
+        
+        <h4>Figure 1: Box Plot of Accessibility Distribution</h4>
+        <p>This box plot provides the statistical evidence, showing that the entire distribution of job access shifts downward more severely for EPCs during the Late Night
