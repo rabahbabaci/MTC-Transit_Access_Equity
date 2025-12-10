@@ -1,0 +1,11 @@
+Column | Description | Example
+---------|-------------|----------
+GEOID | Census tract ID | 06001400100
+is_epc | 1 if Equity Priority Community | 0
+population | ACS 2018–2022 population | 4295
+geometry | Tract boundary (EPSG:4326) | POLYGON(...)
+jobs | LODES 2021 workplace jobs | 12521
+jobs_30min | Pilot metric: centroid 30-min jobs | 421795
+am_peak_30min | R5 AM Peak job accessibility | 93818
+late_30min | R5 Late Night job accessibility | 73075
+Δ_30min_% | Percent change (Late vs AM) | -22.1

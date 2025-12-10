@@ -10,12 +10,12 @@
   - *Interpretation:* even with a simplified straight-line model, EPC areas appear more connected to employment clusters.
 
 - **Population context**
-  - EPC tracts generally have moderate to high population, aligning high population with high job accessibility and indicating strong demand for reliable transit options.
-  - Non-EPC areas with lower accessibility are often lower-density, auto-oriented communities.
+  - EPC tracts tend to include more established, older urban neighborhoods with moderate population levels, while many non-EPC tracts in eastern Alameda County are lower-density and auto-oriented.
 
 - **Data joins & keys**
   - GEOIDs required consistent zero-padding (state–county–tract = 11 digits).
   - LODES WAC data needed block → tract aggregation (`w_geocode` → first 11 digits, sum `C000`).
+  - One Alameda tract has no reported LODES jobs (water/no-employment area), which is expected and handled in the merge.
 
 - **Planning takeaways**
   - Strong accessibility in EPC corridors highlights where transit or EV charging integration would serve the most people.
@@ -44,9 +44,10 @@ EPC tracts can access **~75k more jobs** within 30 minutes than non-EPC tracts (
 - EPC tracts show higher medians and a more compact range.
 - Non-EPC tracts show a wider spread and much lower minimums, reflecting suburban isolation.
 
-**Key early takeaway**
+**Key early takeaway**  
 EPC tracts show consistently strong job accessibility even under a simple model, while non-EPC suburban areas lag behind.  
 The final phase will evaluate whether these gaps persist once we use **network-based, time-aware isochrones** for AM peak vs. late night.
 
 **Data sources:**  
 MTC Plan Bay Area 2050 (EPC), US Census TIGER/ACS 2022, LEHD LODES 2021 (WAC).
+
