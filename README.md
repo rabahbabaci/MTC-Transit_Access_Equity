@@ -1,15 +1,3 @@
-- **CYPLAN 101 final submission expectations (Track B)**
-- **Midterm rubric & final project guide**
-- Your **actual pipeline and folder structure**
-- What your notebook now produces (GTFS, OSM, R5, isochrones, paired maps, job-access summaries, etc.)
-
-It makes your repo look clean, intentional, and academically rigorous.
-
----
-
-# **README.md — Final Version**
-
-````md
 # Transit Access Equity: Time-Aware Isochrones in Alameda County
 
 **CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)**  
@@ -31,7 +19,6 @@ source .venv/bin/activate          # Mac/Linux
 
 pip install -r requirements.txt
 ```
-````
 
 Create a `.env` file in the project root:
 
@@ -227,7 +214,3 @@ MIT License — free for academic, instructional, and research use.
 **Rabah Babaci** — [https://linkedin.com/in/rabahbabaci](https://linkedin.com/in/rabahbabaci)
 **Adithya Ayanam** — UC Berkeley
 **Mentor:** Metropolitan Transportation Commission (MTC)
-
-```
-
-```
