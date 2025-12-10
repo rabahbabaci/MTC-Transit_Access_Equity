@@ -1,45 +1,60 @@
 # Transit Access Equity: Time-Aware Isochrones in Alameda County
 
-**CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)**  
-**Track B (Advanced)**  
-**Mentor:** Metropolitan Transportation Commission (MTC)  
-**Team:** Rabah Babaci & Adithya Ayanam
+CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)  
+Track B (Advanced)  
+Mentor: Metropolitan Transportation Commission (MTC)  
+Team: Rabah Babaci & Adithya Ayanam
+
+---
+
+## Project Overview
+
+This project evaluates disparities in transit-based job accessibility across Alameda County, with an emphasis on Equity Priority Communities (EPCs) identified in Plan Bay Area 2050. The central question is how accessibility changes by time of day and whether EPC communities experience greater losses in access during periods of reduced transit service.
+
+The final analysis uses time-aware routing with GTFS schedules, OpenStreetMap networks, and the r5py routing engine. Isochrones, travel-time matrices, and job-count accessibility measures are computed for AM Peak (7:30–8:30) and Late Night (22:00–23:00). Results are communicated through both static and interactive visualizations, as required for Track B.
+
+The core story is whether transit access contracts unevenly after dark, and what that implies for transit equity and service planning.
 
 ---
 
 ## Quickstart
 
+Clone the repository:
+
 ```bash
 git clone https://github.com/<your-username>/MTC-Transit_Access_Equity.git
 cd MTC-Transit_Access_Equity
+```
 
+Set up the environment:
+
+```bash
 python3 -m venv .venv
-source .venv/bin/activate          # Mac/Linux
-# .venv\Scripts\activate           # Windows
-
+source .venv/bin/activate        # Mac/Linux
+# .venv\Scripts\activate         # Windows
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the project root:
+Create a `.env` file in the project root with the required API keys:
 
 ```
-CENSUS_API_KEY=your_census_api_key
-API_511_KEY=your_511_key_here       # required for GTFS downloads
+CENSUS_API_KEY=your_key_here
+API_511_KEY=your_key_here
 ```
 
-Launch the analysis:
+Run the full analysis:
 
 ```bash
 jupyter notebook notebooks/transit_access_equity_midterm.ipynb
 ```
 
-All outputs are saved automatically into:
+All outputs are saved automatically to:
 
-- `data/processed/`
-- `visualizations/`
-- `results/`
+- data/processed/
+- visualizations/
+- results/
 
-The notebook runs end-to-end (Restart & Run All) using **relative paths only**.
+The notebook works end-to-end using relative paths.
 
 ---
 
@@ -48,169 +63,190 @@ The notebook runs end-to-end (Restart & Run All) using **relative paths only**.
 ```
 MTC-Transit_Access_Equity/
 ├── data/
-│   ├── raw/                         # original EPC, TIGER, ACS, LODES, GTFS, OSM
-│   └── processed/                   # cleaned tracts, merged datasets, R5 outputs
+│   ├── raw/                         # EPC, TIGER, ACS, LODES, GTFS, OSM
+│   └── processed/                   # cleaned tracts, merged tables, R5 matrices and isochrones
 │
 ├── docs/
-│   └── data_dictionary.txt          # definitions of all fields used in analyses
+│   └── data_dictionary.txt          # definitions of all main fields
 │
 ├── notebooks/
-│   └── transit_access_equity_midterm.ipynb   # full analysis (midterm + final phase)
+│   └── transit_access_equity_midterm.ipynb   # complete reproducible workflow
 │
-├── results/                         # markdown summaries, PDF reports, tables
-├── visualizations/                  # PNG charts + HTML interactive maps
-├── src/                             # (Track B) placeholders for modularization
+├── results/                         # early findings and summary tables
+├── visualizations/                  # static and interactive figures
+├── src/                             # optional modular code (Track B structure)
 │
-├── .env                             # API keys (gitignored)
 ├── .gitignore
+├── .env
 ├── LICENSE
-├── README.md
-└── requirements.txt
+├── requirements.txt
+└── README.md
 ```
 
----
-
-## Project Overview
-
-This project examines **spatial and temporal inequities in transit-based job accessibility** across **Alameda County**, with specific attention to **Equity Priority Communities (EPCs)** as defined in _MTC Plan Bay Area 2050_.
-
-We evaluate two complementary metrics:
-
-1. **Midterm metric (proxy model):**
-   Jobs reachable within 30 minutes using straight-line distance + 40 km/h travel proxy.
-
-2. **Final Phase (Track B): Time-aware R5 accessibility model**
-
-   - Uses **GTFS transit schedules (AC Transit + BART)**
-   - Uses **OSM street network (Alameda County extract)**
-   - Computes **AM Peak vs Late Night travel-time matrices**
-   - Generates **15 / 30 / 45-minute isochrones**
-   - Quantifies accessibility differences between EPC vs non-EPC tracts
-
-**Core Research Questions**
-
-- How do job accessibility levels vary between EPC and non-EPC communities?
-- How much do accessibility levels change from **AM Peak (7:30–8:30)** to **Late Night (22:00–23:00)**?
-- Do EPC tracts experience **greater reductions** in late-night access?
-- What insights support equitable transit and mobility planning?
+Large raw datasets (GTFS and OSM) are not committed to GitHub, following course policy. Instructions and code for downloading and processing them are provided in the notebook.
 
 ---
 
 ## Data Sources
 
-All required datasets are stored in `data/raw/` (large files excluded from GitHub per CYPLAN 101 policy).
+- Equity Priority Communities (MTC Plan Bay Area 2050)
+- TIGER/Line Census Tracts (2022)
+- ACS 2018–2022 5-year population estimates
+- LODES WAC (2021) workplace jobs
+- 511.org GTFS feeds for AC Transit and BART
+- OpenStreetMap NorCal extract (Geofabrik)
 
-- **EPC Layer** — MTC Plan Bay Area 2050
-- **TIGER/Line Tracts (2022)** — U.S. Census Bureau
-- **ACS 2018–2022 5-year estimates** — Population
-- **LODES (WAC 2021)** — Workplace jobs
-- **GTFS Feeds (511 API)** — AC Transit & BART (time-aware schedules)
-- **OpenStreetMap (Geofabrik Extract)** — NorCal network
-
-All merged and processed datasets are stored in `data/processed/`.
+All raw inputs flow into standardized, validated datasets stored in data/processed/.
 
 ---
 
-## Summary of Methods
+## Methods
 
-### 1. Data Cleaning & Validation
+### 1. Data Cleaning
 
-- Standardized FIPS GEOID formatting (11 digits)
-- Merged EPC, population, TIGER geometry, and LODES jobs
-- Identified missing ACS and LODES values; classified missingness per _Dark Data_ typology
-- Validated CRS (EPSG:4326 for storage; EPSG:26910 for distance)
-- Ensured geometries were valid; fixed or removed invalid shapes
+- Standardized Census GEOID to 11-digit FIPS format
+- Merged EPC, ACS population, TIGER geometries, and LODES job data
+- Performed missing data classification using concepts from Dark Data:
 
-### 2. Proxy Accessibility (Midterm)
+  - ACS and LODES contain zero-population tracts (structural missingness)
+  - LODES blind spots (employment suppressed or assigned to block groups)
 
-- Computed centroid-to-centroid distances
-- Converted distance to travel time using a uniform 40 km/h assumption
-- Estimated jobs reachable within 30 minutes
-- Produced boxplots, choropleths, and bar charts
+- Ensured CRS consistency (EPSG:4326 for mapping; EPSG:26910 for distance metrics)
+- Validated geometries and removed or corrected invalid shapes
 
-### 3. Time-Aware Accessibility (Final)
+All cleaning steps are included in the notebook and documented in comments.
 
-- Downloaded GTFS automatically via 511 API
-- Clipped NorCal OSM to Alameda County using `osmium`
-- Built an **R5py TransportNetwork** (OSM + GTFS)
-- Selected **6 representative tracts** (3 EPC, 3 non-EPC)
-- Computed full **travel-time matrices** for AM Peak and Late Night
-- Generated **convex-hull isochrones (15/30/45 min)**
-- Calculated job accessibility for each time window
-- Computed **% change** from AM → Late Night
-- Mapped findings using static and interactive visualizations
+### 2. Accessibility Measures (Midterm, Proxy Model)
 
----
+- Distance between tract centroids
+- Travel time estimated using constant 40 km/h proxy
+- Jobs reachable within 30 minutes using merged LODES WAC data
 
-## Key Outputs
+This stage provided baseline insights prior to final routing.
 
-All outputs below are automatically generated during execution.
+### 3. Time-Aware Routing with R5 (Final Phase)
 
-### Processed Data
+- Downloaded GTFS feeds using the 511 API
+- Downloaded and clipped OSM NorCal extract to Alameda County boundary
+- Constructed r5py TransportNetwork (OSM + GTFS)
+- Selected six representative tracts (three EPC, three non-EPC)
+- Computed AM Peak and Late Night travel-time matrices
+- Generated 15, 30, and 45-minute isochrones using convex-hull method
+- Aggregated LODES jobs accessible at each time threshold
+- Calculated percent change in accessibility from AM to Late Night
 
-| File                            | Description                            |
-| ------------------------------- | -------------------------------------- |
-| `alameda_final.geojson`         | Cleaned tracts with EPC and population |
-| `travel_times_am_late.csv`      | R5 travel-time matrix (AM + Late)      |
-| `isochrones_am.geojson`         | AM Peak 15/30/45-min isochrones        |
-| `isochrones_late.geojson`       | Late Night 15/30/45-min isochrones     |
-| `job_accessibility_summary.csv` | Jobs reachable + % change              |
+### 4. Visualization
 
-### Visualizations
+All required visualizations follow design guidance from course lectures:
 
-| Output                                             | Path                                                 |
-| -------------------------------------------------- | ---------------------------------------------------- |
-| Interactive Map (All thresholds)                   | `visualizations/explorer_all_thresholds.html`        |
-| AM vs Late 30-min Comparison Map                   | `visualizations/main_am_vs_late_30min.html`          |
-| Paired Static Map (AM Access vs Late-Night Change) | `visualizations/final_paired_map.png`                |
-| Percent-Change Bar Chart (City Labels)             | `visualizations/job_access_change_bar_citynames.png` |
-| Midterm Boxplot                                    | `visualizations/jobs30_boxplot.png`                  |
-| Midterm Choropleth                                 | `visualizations/jobs30_map.png`                      |
-| Midterm Bar Chart                                  | `visualizations/jobs30_bar_chart.png`                |
+- No unnecessary color variation
+- Consistent scales
+- Clear interpretability
+- No pie charts, spaghetti plots, or visual clutter
 
-### Documentation
-
-- `docs/data_dictionary.txt`
-- `results/early_findings.md`
-- `results/report.pdf` (midterm)
+Interactive outputs use Folium/Leaflet and include layer toggles (time × threshold).
 
 ---
 
-## Findings Summary
+## Key Results
 
-### Midterm (Static Proxy)
+### Midterm Findings (Proxy Model)
 
-- EPC tracts reached **~75,000 more jobs** on average than non-EPC tracts.
-- Accessibility highest along the **West County corridor** (Berkeley → Oakland → Hayward).
-- Eastern Alameda County exhibited significantly lower accessibility.
+- EPC tracts could reach approximately 75,000 more jobs within 30 minutes than non-EPC tracts.
+- Highest accessibility appeared along the Berkeley–Oakland corridor.
+- Eastern parts of the county showed substantially lower proxy access.
 
-### Final (Time-Aware Accessibility)
+### Final Findings (Time-Aware)
 
-- Accessibility drops **substantially at night**, and **unevenly** across the county.
-- Some EPC tracts maintain strong late-night access; others decline sharply.
-- Several non-EPC suburban tracts see **large percentage declines**, reflecting limited evening service.
-- The paired maps and bar charts illustrate which communities are most vulnerable to service reductions.
+- Accessibility declines significantly at night for most tracts.
+- The magnitude of decrease varies: some EPC tracts maintain competitive access, while others lose a large share of reachable jobs.
+- Several non-EPC suburban tracts experience steep declines due to limited late-night service.
+- The paired map and percent-change bar chart highlight which cities experience the largest reductions.
+
+### Interpretive Notes
+
+- Accessibility varies not only by geography but by time of day, which affects workers traveling during late-night or early-morning hours.
+- EPC status alone does not predict late-night vulnerability; the interaction between location and service frequency matters.
 
 ---
 
-## Reproducibility Notes
+## Limitations
 
-- Notebook uses **relative file paths** only.
-- Dependencies fully captured in `requirements.txt`.
-- R5py requires a working Java runtime (automatically started on import).
-- All figures export automatically to the `visualizations/` folder.
-- The notebook fully supports “Restart & Run All.”
+This analysis includes several limitations, addressed explicitly per final submission requirements:
+
+### Missing and Dark Data
+
+- LODES jobs rely on synthetic workplace assignments with known blind spots.
+- ACS population estimates include sampling variability that may affect high-resolution comparisons.
+- GTFS reflects scheduled service, not real-world reliability or delays.
+
+### Statistical Interpretation Risks
+
+- Summary statistics can obscure extremes; median changes do not reveal outliers.
+- Choropleths can introduce MAUP effects due to tract boundaries.
+- Isochrones derived from convex hulls may over-generalize reachable areas.
+
+### Ecological Fallacy
+
+- Accessibility is measured at tract level but does not reflect individual-level travel behavior or mode preferences.
+
+### Model Constraints
+
+- R5 travel-time calculations do not include fare constraints or agency-specific transfer penalties beyond GTFS metadata.
+
+---
+
+## Interactive Visualizations
+
+At least two interactive visualizations are required for Track B.
+
+This project provides:
+
+1. **Interactive Isochrone Explorer**
+   `visualizations/explorer_all_thresholds.html`
+   Allows toggling 15/30/45-minute thresholds for AM Peak and Late Night.
+
+2. **AM vs Late Night Comparison Map**
+   `visualizations/main_am_vs_late_30min.html`
+   Provides immediate comparison of 30-minute isochrones across time periods.
+
+Both are referenced in the StoryMap and support the final narrative.
+
+The notebook that generates these is:
+`notebooks/transit_access_equity_midterm.ipynb`
+This notebook runs end-to-end and contains all processing steps.
+
+---
+
+## Reproducibility
+
+- The entire workflow runs using relative paths.
+- All dependencies are listed in `requirements.txt`.
+- The notebook includes comments documenting algorithmic steps, not template placeholders.
+- Raw data is not committed; the notebook provides automated scripts for fetching GTFS and OSM inputs.
+
+---
+
+## How This Repository Supports the Final Submission
+
+This repository provides:
+
+- A complete, reproducible analysis pipeline
+- A clear narrative for StoryMap integration
+- Interactive visualizations required for Track B
+- Documentation suitable for the final evaluation rubric
+- Data dictionary and structured folders following best practices from the Final Project Guide
 
 ---
 
 ## License
 
-MIT License — free for academic, instructional, and research use.
+MIT License — free for academic and research use.
 
 ---
 
 ## Contact
 
-**Rabah Babaci** — [https://linkedin.com/in/rabahbabaci](https://linkedin.com/in/rabahbabaci)
-**Adithya Ayanam** — UC Berkeley
-**Mentor:** Metropolitan Transportation Commission (MTC)
+Rabah Babaci
+Adithya Ayanam
+Mentor: Metropolitan Transportation Commission (MTC)
