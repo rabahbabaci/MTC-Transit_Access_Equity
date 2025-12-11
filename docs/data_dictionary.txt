@@ -30,5 +30,6 @@ pretty_name | City plus EPC label | Oakland (EPC)
 
 minutes | Isochrone threshold (15, 30, 45) | 30
 period | Time period for isochrone (AM Peak or Late Night) | AM Peak
+
 origin_id | GEOID of origin tract | 06001402200
 origin_name | Name or label for origin tract | 06001402200
