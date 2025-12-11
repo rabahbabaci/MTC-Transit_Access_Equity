@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Transit Access Equity: Time-Aware Isochrones in Alameda County</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.55;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            color: #222;
+        }
+
+        header {
+            background: #1f3a93;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #1f3a93;
+            margin-top: 45px;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px 0 50px 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 720px;
+            /* Increased height for better viewing */
+            border: 1px solid #ccc;
+            margin: 35px 0;
+            background: white;
+        }
+
+        .static-img {
+            width: 100%;
+            max-width: 900px;
+            margin: 25px 0;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        details {
+            margin-top: 40px;
+            background: #eee;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: #1f3a93;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Transit Access Equity in Alameda County</h1>
+        <p>Time-Aware Isochrones & Job Accessibility Using R5</p>
+        <p>CYPLAN 101 — Track B (Advanced) | Fall 2025</p>
+        <p>Authors: Rabah Babaci &amp; Adithya Ayanam</p>
+    </header>
+
+    <div class="container">
+
+        <!-- --------------------------------------------------------- -->
+        <!-- INTRODUCTION -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Introduction</h2>
+        <p>
+            Transit access is not constant throughout the day. While the AM Peak period benefits
+            from high frequency and coordinated transfers, late-night service often operates with
+            long headways and reduced coverage. For workers who rely on transit—especially those
+            living in Equity Priority Communities (EPCs)—these variations can meaningfully change
+            the number of reachable jobs and opportunities.
+        </p>
+
+        <p>
+            This project investigates a central question:
+            <strong>How does transit-based job accessibility change from the AM Peak (7:30–8:30 AM)
+                to Late Night (10:00–11:00 PM), and do EPC tracts experience disproportionately larger
+                losses?</strong>
+        </p>
+
+        <p>
+            Using the R5 routing engine, we compute detailed travel-time matrices, isochrones, and
+            job-reachability metrics for six representative tracts across Alameda County.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- METHODS -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Methods</h2>
+
+        <h3>Data Sources</h3>
+        <p>
+            We integrate multiple datasets to construct a multimodal routing and accessibility
+            framework:
+        </p>
+
+        <ul>
+            <li>TIGER/Line tract boundaries (2022)</li>
+            <li>ACS 2018–2022 population</li>
+            <li>LEHD LODES 2021 workplace data</li>
+            <li>MTC Plan Bay Area 2050 EPC classification</li>
+            <li>GTFS for AC Transit and BART</li>
+            <li>OpenStreetMap street network for Alameda County</li>
+        </ul>
+
+        <p>
+            All GEOIDs were standardized, geometries validated, and dark/missing data were
+            systematically documented following course guidelines.
+        </p>
+
+        <h3>R5 Routing</h3>
+        <p>
+            R5 was used to compute complete travel-time matrices for two periods:
+        </p>
+
+        <ul>
+            <li><strong>AM Peak (7:30–8:30 AM)</strong></li>
+            <li><strong>Late Night (10:00–11:00 PM)</strong></li>
+        </ul>
+
+        <p>
+            Six origin tracts (3 EPC, 3 non-EPC) were selected across Oakland, San Leandro,
+            Fremont/Union City, and Hayward. Isochrones were generated for 15/30/45 minutes,
+            and job accessibility metrics were linked using LODES workplace counts.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- EPC CONTEXT MAP -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Equity Priority Communities in Alameda County</h2>
+        <p>
+            The map below provides geographic context for EPC tracts used in the analysis.
+        </p>
+
+        <iframe src="../visualizations/epc_map.html"></iframe>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- ISOCHRONE EXPLORER -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Isochrone Explorer: AM Peak vs. Late Night</h2>
+
+        <p>
+            The interactive explorer below illustrates how far transit can reach from each
+            representative tract across multiple time thresholds. Comparing AM Peak and Late Night
+            reveals the spatial contraction of reachable areas when service frequency drops.
+        </p>
+
+        <iframe src="../visualizations/explorer_all_thresholds.html"></iframe>
+
+        <p>
+            This visualization directly answers <strong>where</strong> and <strong>for whom</strong>
+            transit reach shrinks after dark. EPC tracts in Oakland and Hayward show some of the
+            sharpest reductions.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- ANIMATED JOB ACCESSIBILITY -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Animated Job Accessibility (15 / 30 / 45 Minutes)</h2>
+
+        <p>
+            The animated chart below compares the number of jobs reachable from each origin tract
+            across both time windows and thresholds. It illustrates the combined effects of
+            service span, headways, and congestion relief.
+        </p>
+
+        <iframe src="../visualizations/animated_accessibility_slider.html"></iframe>
+
+        <p>
+            The animation highlights how accessibility expands with each additional travel-minute
+            and how Late Night accessibility diverges from AM Peak conditions, especially for EPC
+            tracts that rely on frequent trunk-line service.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- PERCENT CHANGE BAR CHART -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Percent Change in 30-Minute Job Accessibility</h2>
+
+        <p>
+            This chart summarizes Late Night vs. AM Peak accessibility changes at the
+            30-minute threshold—a level commonly used in regional planning.
+        </p>
+
+        <img class="static-img" src="../visualizations/job_access_change_bar_citynames.png"
+            alt="Percent Change in Accessibility" />
+
+        <p>
+            EPC areas in Oakland experience the steepest declines, while southern Alameda County
+            shows modest gains due to reduced roadway congestion and shorter vehicle cycle times.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- PAIRED MAP -->
+        <!-- --------------------------------------------------------- -->
+        <h2>AM Peak Access vs. Late-Night Accessibility Impact</h2>
+
+        <p>
+            The paired map shows both the absolute AM Peak job access and the percent change after
+            dark, allowing a direct comparison of baseline strength and nighttime vulnerability.
+        </p>
+
+        <img class="static-img" src="../visualizations/final_paired_map.png"
+            alt="Paired AM Peak and Late-Night Accessibility Map" />
+
+        <p>
+            This provides the most complete picture of time-of-day equity: which places start with
+            high access, and which lose the most at night.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- OPTIONAL ADDITIONAL FIGURES -->
+        <!-- --------------------------------------------------------- -->
+        <details>
+            <summary>Additional Figures (Midterm & Diagnostic Visuals)</summary>
+            <img class="static-img" src="../visualizations/jobs30_map.png" alt="30-Minute Proxy Map" />
+            <img class="static-img" src="../visualizations/jobs30_bar_chart.png" alt="Proxy Job Access Bar Chart" />
+            <img class="static-img" src="../visualizations/jobs30_violin.png"
+                alt="Distribution of Proxy Accessibility" />
+        </details>
+
+
+        <!-- --------------------------------------------------------- -->
+        <!-- LIMITATIONS -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Limitations</h2>
+
+        <p>
+            Several data and methodological constraints shape this analysis:
+        </p>
+
+        <ul>
+            <li><strong>GTFS represents scheduled, not real, service.</strong> Reliability issues or cancellations are
+                not captured.</li>
+            <li><strong>LODES workplace data</strong> includes imputed and suppressed values.</li>
+            <li><strong>ACS estimates</strong> include sampling variability, especially for small-population tracts.
+            </li>
+            <li><strong>Ecological fallacy risk:</strong> tract-level summaries do not represent individual experiences.
+            </li>
+            <li><strong>MAUP:</strong> tract boundaries influence spatial patterns.</li>
+            <li><strong>Isochrones are convex hulls</strong>—they may overgeneralize reach in complex networks.</li>
+        </ul>
+
+        <p>
+            These issues highlight the need to interpret the results as indicative patterns rather
+            than precise operational performance measures.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- POLICY -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Policy Considerations</h2>
+
+        <p>
+            The findings suggest several actionable points for transit planning:
+        </p>
+
+        <ul>
+            <li>EPC tracts in Oakland and Hayward experience the largest nighttime losses and could benefit from
+                stronger span-of-service improvements.</li>
+            <li>Late-night headway consolidation on key corridors could reduce transfer friction.</li>
+            <li>Southern Alameda County, while not severely impacted, still faces long base travel times.</li>
+        </ul>
+
+        <p>
+            Equity-focused service planning should consider both frequency and reliability across
+            the full day—not only during the peak period.
+        </p>
+
+        <!-- --------------------------------------------------------- -->
+        <!-- REPRODUCIBILITY -->
+        <!-- --------------------------------------------------------- -->
+        <h2>Reproducibility</h2>
+
+        <p>
+            All code, processed datasets, and interactive outputs are available in the GitHub
+            repository. The full workflow can be reproduced via the notebook:
+        </p>
+
+        <p><strong>notebooks/time_aware_transit_access_equity.ipynb</strong></p>
+
+        <p style="margin-top:40px; font-size:14px; color:#555;">
+            © 2025 — Rabah Babaci &amp; Adithya Ayanam, UC Berkeley CYPLAN 101
+        </p>
+
+    </div>
+</body>
+
+</html>
