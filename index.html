@@ -30,27 +30,36 @@
         }
 
         header {
-            background: linear-gradient(135deg, var(--primary), #091b3b);
+            background: linear-gradient(135deg, #0d2d6c, #082040);
             color: #ffffff;
-            padding: 52px 20px 36px 20px;
+            padding: 70px 20px 80px 20px;
             text-align: center;
+            border-bottom: 3px solid #0a1a33;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header h1 {
-            margin: 0 0 8px 0;
-            font-size: 2.2rem;
-            letter-spacing: 0.03em;
+            margin: 0 0 50px 0;
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            
         }
 
         header p {
-            margin: 3px 0;
-            font-size: 0.98rem;
+            margin: 6px 0;
+            font-size: 1.05rem;
+            color: #cedee0; 
         }
 
-        .tagline {
-            margin-top: 14px;
-            font-size: 1.05rem;
+        header .tagline {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
             font-weight: 500;
+            color: #cedee0;
         }
 
         nav {
@@ -230,12 +239,20 @@
 </head>
 
 <body>
-
     <header>
         <h1>Transit Access Equity in Alameda County</h1>
-        <p class="tagline">Time-Aware Isochrones and Job Accessibility Using R5</p>
-        <p>CYPLAN 101 — Urban Data &amp; GIS • Track B (Advanced) • Fall 2025</p>
-        <p>Authors: Rabah Babaci &amp; Adithya Ayanam</p>
+    
+        <p class="tagline">
+            Time-Aware Isochrones and Job Accessibility Using R5
+        </p>
+    
+        <p>
+            CYPLAN 101 — Urban Data &amp; GIS • Track B (Advanced) • Fall 2025
+        </p>
+    
+        <p>
+            Authors: Rabah Babaci &amp; Adithya Ayanam
+        </p>
     </header>
 
     <nav>
@@ -254,9 +271,7 @@
 
     <main>
 
-        <!-- --------------------------------------------------------- -->
-        <!-- INTRODUCTION -->
-        <!-- --------------------------------------------------------- -->
+        <!-- Intro -->
         <section id="intro">
             <h2>1. Introduction</h2>
 
@@ -286,9 +301,7 @@
             </p>
         </section>
 
-        <!-- --------------------------------------------------------- -->
-        <!-- METHODS -->
-        <!-- --------------------------------------------------------- -->
+        <!-- Methods -->
         <section id="methods">
             <h2>2. Data &amp; Methods</h2>
 
@@ -355,9 +368,7 @@
             </p>
         </section>
 
-        <!-- --------------------------------------------------------- -->
         <!-- RESULTS & VISUALIZATIONS -->
-        <!-- --------------------------------------------------------- -->
         <section id="results">
             <h2>3. Results &amp; Visual Story</h2>
 
@@ -566,9 +577,7 @@
             </p>
         </section>
 
-        <!-- --------------------------------------------------------- -->
         <!-- POLICY IMPLICATIONS -->
-        <!-- --------------------------------------------------------- -->
         <section id="policy">
             <h2>5. Policy Considerations</h2>
 
@@ -606,9 +615,8 @@
             </p>
         </section>
 
-        <!-- --------------------------------------------------------- -->
         <!-- REPRODUCIBILITY -->
-        <!-- --------------------------------------------------------- -->
+
         <section id="repro">
             <h2>6. Reproducibility &amp; Repository</h2>
 
