@@ -327,6 +327,9 @@
                 errors.
             </p>
 
+            <p>We aggregate job counts to the census tract level to maintain consistency across datasets and to support equity
+            comparisons at a policy-relevant geographic scale.</p>
+
             <h3>2.2 From midterm proxy to time-aware routing</h3>
             <p>
                 The project began with a simplified “midterm” metric: straight-line distances between tract centroids,
@@ -337,7 +340,8 @@
             <p>
                 For the final phase, we replaced this proxy with <strong>time-aware multimodal travel times</strong>
                 using the R5 routing engine. R5 takes GTFS schedules and the OSM street network and computes realistic
-                transit + walk travel times for specific departure windows.
+                transit + walk travel times for specific departure windows. The resulting origin–destination travel-time outputs are spatially joined with census tract geometries and tract-level
+                job counts to compute cumulative accessibility metrics.
             </p>
 
             <h3>2.3 Representative origins and time windows</h3>
@@ -362,15 +366,21 @@
                 <li><strong>Late Night</strong>: 10:00–11:00 PM on the same service day</li>
             </ul>
 
+            <p>Using tract centroids provides a consistent and interpretable destination unit aligned with tract-level employment data,
+            while acknowledging that jobs are distributed within each tract.</p>
+
             <p>
                 For each matrix we capped travel times at 120 minutes, then calculated cumulative jobs reachable within
-                15, 30, and 45 minutes by joining in LODES job counts.
+                15, 30, and 45 minutes by joining in LODES job counts. This cap avoids unrealistic journeys and keeps the analysis focused on trips that are plausibly relevant for daily
+                commuting.
             </p>
         </section>
 
         <!-- RESULTS & VISUALIZATIONS -->
         <section id="results">
             <h2>3. Results &amp; Visual Story</h2>
+            <p>Several of the figures below are interactive and animated; readers are encouraged to toggle layers and move sliders to
+            explore how accessibility patterns change across time windows and thresholds.</p>
 
             <h3>3.1 Spatial context: Where are EPC tracts located?</h3>
             <p>
@@ -408,7 +418,8 @@
             <p class="inline-note">
                 Why this figure matters: it provides an intuitive, map-based view of distance and time. Instead of
                 looking at numbers alone, we can see how the physical size of a person’s “transit world” changes after
-                dark.
+                dark. These differences in geographic reach directly shape how many jobs fall within each time threshold, which we quantify in
+                the next section.
             </p>
 
             <h3>3.3 Animated jobs reachable: How many jobs fit inside those isochrones?</h3>
@@ -486,7 +497,8 @@
             <p>
                 Before running R5, we used a simplified centroid-distance proxy to estimate jobs reachable within 30
                 minutes. These figures are kept here as a reference to show how conclusions shift once realistic transit
-                schedules are included.
+                schedules are included. These proxy visuals are included only to illustrate why peak-only, distance-based metrics can be misleading; all
+                conclusions in this project are based on time-aware R5 results.
             </p>
 
             <details>
@@ -519,12 +531,12 @@
                         tracts would be interesting to examine further with R5.
                     </figcaption>
                 </figure>
+                <p>While the proxy analysis covers all tracts countywide, the R5-based results focus on representative origins to
+                prioritize realism over coverage.</p>
             </details>
         </section>
 
-        <!-- --------------------------------------------------------- -->
         <!-- LIMITATIONS -->
-        <!-- --------------------------------------------------------- -->
         <section id="limitations">
             <h2>4. Limitations &amp; Dark Data</h2>
 
@@ -537,7 +549,8 @@
                 <li>
                     <strong>GTFS describes scheduled service, not actual operations.</strong> Cancellations, delays, and
                     reliability issues are not captured. This can be misleading if riders frequently experience missed
-                    connections or long unscheduled waits.
+                    connections or long unscheduled waits. Because service reliability issues often disproportionately affect riders in Equity Priority Communities, this
+                    limitation may understate real-world inequities.
                 </li>
                 <li>
                     <strong>LODES workplace counts are partly imputed.</strong> For privacy reasons, some workplace data
@@ -557,7 +570,8 @@
                 <li>
                     <strong>MAUP (modifiable areal unit problem).</strong> We chose tracts because they are standard and
                     well-documented, but different boundaries or finer units would change the patterns shown on the
-                    maps.
+                    maps. We prioritize tracts because they align with planning practice and available equity datasets, even though finer spatial
+                    units could reveal additional within-tract variation.
                 </li>
                 <li>
                     <strong>Isochrone simplification.</strong> Isochrones are built from convex hulls around reachable
@@ -573,7 +587,8 @@
             <p>
                 These issues reflect the “dark data” and pitfalls discussed in class: summary statistics can hide
                 uncertainty, spatial aggregation can mislead, and data products are always approximations of reality.
-                The figures in this story should be read with these caveats in mind.
+                The figures in this story should be read with these caveats in mind. Taken together, these limitations mean that our findings are best interpreted as relative comparisons between time
+                windows and community types, rather than precise estimates of absolute job access.
             </p>
         </section>
 
@@ -582,7 +597,8 @@
             <h2>5. Policy Considerations</h2>
 
             <p>
-                Even with these limitations, several patterns are robust enough to inform practice:
+                Taken together, the results show that time of day is a critical but often overlooked dimension of transit equity in
+                Alameda County. Even with these limitations, several patterns are robust enough to inform practice:
             </p>
 
             <ul>
@@ -611,8 +627,11 @@
 
             <p>
                 Together, these findings argue for evaluating transit plans not only at the “average commute,” but
-                across the full day—especially for workers with late-night or early-morning schedules.
+                across the full day—especially for workers with late-night or early-morning schedules. Evaluating accessibility across the full service day, rather than only during peak periods, can help agencies avoid
+                unintentionally privileging nine-to-five commutes over other work schedules.
             </p>
+            <p>These findings should be interpreted as illustrative rather than prescriptive, highlighting where more detailed
+            corridor-level analysis could be most impactful.</p>
         </section>
 
         <!-- REPRODUCIBILITY -->
@@ -625,7 +644,11 @@
                 times and accessibility metrics—is implemented in a single Jupyter notebook:
             </p>
 
-            <p><code>notebooks/time_aware_transit_access_equity.ipynb</code></p>
+            <p><code>notebooks/time_aware_transit_access_equity.ipynb</code></p>The notebook is structured to run sequentially from top to bottom, with markdown cells indicating each major processing
+            step.
+
+            <p>Large raw datasets (e.g., GTFS feeds) are not committed to the repository and are instead downloaded or referenced
+            within the notebook.</p>
 
             <p>
                 Processed datasets (tract geometries, travel-time matrices, isochrones, and accessibility summaries) are
@@ -637,8 +660,10 @@
 
             <p>
                 With these pieces, a reader can clone the repository, recreate the environment, and run the notebook
-                from top to bottom to reproduce all results shown on this page.
+                from top to bottom to reproduce all results shown on this page. This structure prioritizes transparency by making modeling choices, assumptions, and transformations visible at each
+                step of the workflow.
             </p>
+            
 
             <footer>
                 © 2025 &nbsp;•&nbsp; Rabah Babaci &amp; Adithya Ayanam &nbsp;•&nbsp; UC Berkeley CYPLAN 101
