@@ -262,8 +262,6 @@ MIT License — unrestricted academic and research use.
 
 ## **Contact**
 
-**Rabah Babaci**
-**Adithya Ayanam**
+**Rabah Babaci**<br>
+**Adithya Ayanam**<br>
 Mentor: **Metropolitan Transportation Commission (MTC)**
-
----
