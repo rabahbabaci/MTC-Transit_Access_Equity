@@ -34,7 +34,7 @@ To answer this question, we integrate:
 
 We compute:
 
-- **AM Peak (7:30–8:30 AM)** and **Late Night (10:00–11:00 PM)** travel-time matrices
+- **AM Peak (7:30–8:30 AM)** and **Late Night (22:00–23:00 PM)** travel-time matrices
 - **Isochrones** for 15 / 30 / 45 minutes
 - **Job accessibility metrics** for six representative EPC and non-EPC census tracts
 - **Interactive and static visualizations** comparing peak and late-night access
