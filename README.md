@@ -1,9 +1,9 @@
 # **Transit Access Equity: Time-Aware Isochrones in Alameda County**
 
-**CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)**
-**Track B (Advanced)**
-**Mentor:** Metropolitan Transportation Commission (MTC)
-**Team:** Rabah Babaci & Adithya Ayanam
+**CYPLAN 101 — Introduction to Urban Data Analytics (Fall 2025)**<br>
+**Track B (Advanced)**<br>
+**Mentor:** Metropolitan Transportation Commission (MTC)<br>
+**Team:** Rabah Babaci & Adithya Ayanam<br>
 
 ---
 
