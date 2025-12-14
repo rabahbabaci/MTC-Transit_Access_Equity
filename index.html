@@ -277,13 +277,14 @@ x
             <p>
                 Executive Technical Summary
 
-                This study evaluates how transit-based job accessibility in Alameda County varies by time of day, with a focus on equity impacts 
-                for residents of Equity Priority Communities (EPCs). Using GTFS-based, time-aware routing with the R5 engine, we compute cumulative 
-                jobs reachable within 15, 30, and 45 minutes from six representative census tracts during the AM Peak and Late Night periods. 
-                Results show that late-night transit service substantially reduces job access in several EPC tracts, even where daytime access is 
-                strong, while a small number of non-EPC tracts experience modest gains due to reduced congestion. By comparing these results to a
-                simplified distance-based proxy, we demonstrate the importance of schedule-aware accessibility metrics for equity analysis and 
-                policy evaluation.
+             This project looks at how transit-based access to jobs in Alameda County changes depending on the time of day, with a 
+                particular focus on Equity Priority Communities (EPCs). Using GTFS transit schedules and the R5 routing engine, we 
+                estimate how many jobs can be reached within 15, 30, and 45 minutes by transit and walking from six representative 
+                census tracts during the morning peak and late night. We find that late-night service often results in substantial 
+                drops in job access, especially for EPC tracts that have relatively strong access during the morning. While a few non-EPC 
+                tracts see small gains at night due to lower congestion, these gains generally occur on top of lower baseline access. 
+                Comparing these results to a simplified distance-based proxy highlights why time-aware routing is necessary for understanding
+                transit equity across the full service day.
             </p>
         </section>
 
@@ -344,10 +345,13 @@ x
                 errors.
             </p>
 
-            <p>We aggregate job counts to the census tract level to maintain consistency across datasets and to support equity
-            comparisons at a policy-relevant geographic scale.Job accessibility is measured using total jobs per tract rather 
-            than per-capita rates, as the objective is to estimate absolute employment opportunities reachable within a given travel time, 
-            not to model individual competition for jobs.</p>
+            <p>
+               We aggregate job counts to the census tract level to keep the units of the unit of analysis consistent across 
+               datasets and aligned with how equity designations are defined in regional planning practice. Job accessibility is 
+               measured as the total number of jobs reachable within a given travel time, rather than a per-capita measure. This 
+               choice is intentional: the goal of the analysis is to understand how many employment opportunities are realistically 
+                reachable by transit from a place, not to estimate how those jobs are distributed among individuals.
+            </p>
 
             <h3>2.2 From midterm proxy to time-aware routing</h3>
             <p>
@@ -398,8 +402,11 @@ x
         <!-- RESULTS & VISUALIZATIONS -->
         <section id="results">
             <h2>3. Results &amp; Visual Story</h2>
-            <p>Several of the figures below are interactive and animated; readers are encouraged to toggle layers and move sliders to
-            explore how accessibility patterns change across time windows and thresholds.</p>
+            <p>The figures in the following sections are designed to be exploratory as well as comparative. Rather 
+                than relying on a single summary statistic, we use maps and animated charts to show how accessibility
+                patterns shift across time windows and travel-time thresholds. Readers are encouraged to toggle 
+                layers and move sliders to explore how accessibility patterns change across time windows and thresholds.
+            </p>
 
             <h3>3.1 Spatial context: Where are EPC tracts located?</h3>
             <p>
@@ -514,12 +521,11 @@ x
 
             <h3>3.6 Model Validation: Proxy vs. Time-Aware Accessibility</h3>
             <p>
-                Before implementing time-aware routing, we evaluated a simplified accessibility proxy based on straight-line
-                distances between census tract centroids, converted to travel time using a constant assumed speed. This approach 
-                provided an initial benchmark but ignored transit schedules, transfers, service frequency, and time-of-day variation. 
-                By comparing proxy-based results with R5-generated, schedule-aware travel times, we validate that peak-only,
-                distance-based metrics can misrepresent both the magnitude and spatial distribution of job access. This comparison 
-                motivates the use of time-aware routing for all conclusions presented in this study.
+                Before running time-aware routing, we experimented with a simplified accessibility proxy based on straight-line
+                distances between census tract centroids. This approach was useful early on because it was fast to compute and 
+                helped identify broad spatial patterns. However, once we compared the proxy results to R5-based travel times, 
+                it became clear that the proxy often overstated access and failed to capture differences between morning and 
+                late-night service. For this reason, all results discussed in this report are based on the time-aware R5 outputs.
             </p>
 
             <details>
