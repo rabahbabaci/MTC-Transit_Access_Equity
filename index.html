@@ -16,7 +16,7 @@
             --text-main: #222222;
             --text-muted: #555555;
         }
-
+x
         * {
             box-sizing: border-box;
         }
@@ -270,7 +270,24 @@
     </nav>
 
     <main>
+        <!-- Executive Technical Summary -->
+        <section id="summary">
+            <h2>Executive Summary</h2>
 
+            <p>
+                Executive Technical Summary
+
+                This study evaluates how transit-based job accessibility in Alameda County varies by time of day, with a focus on equity impacts 
+                for residents of Equity Priority Communities (EPCs). Using GTFS-based, time-aware routing with the R5 engine, we compute cumulative 
+                jobs reachable within 15, 30, and 45 minutes from six representative census tracts during the AM Peak and Late Night periods. 
+                Results show that late-night transit service substantially reduces job access in several EPC tracts, even where daytime access is 
+                strong, while a small number of non-EPC tracts experience modest gains due to reduced congestion. By comparing these results to a
+                simplified distance-based proxy, we demonstrate the importance of schedule-aware accessibility metrics for equity analysis and 
+                policy evaluation.
+            </p>
+        </section>
+
+            
         <!-- Intro -->
         <section id="intro">
             <h2>1. Introduction</h2>
@@ -495,12 +512,14 @@
                 in one view that can be read by both technical and non-technical audiences.
             </p>
 
-            <h3>3.6 Midterm proxy metric (for comparison)</h3>
+            <h3>3.6 Model Validation: Proxy vs. Time-Aware Accessibility</h3>
             <p>
-                Before running R5, we used a simplified centroid-distance proxy to estimate jobs reachable within 30
-                minutes. These figures are kept here as a reference to show how conclusions shift once realistic transit
-                schedules are included. These proxy visuals are included only to illustrate why peak-only, distance-based metrics can be misleading; all
-                conclusions in this project are based on time-aware R5 results.
+                Before implementing time-aware routing, we evaluated a simplified accessibility proxy based on straight-line
+                distances between census tract centroids, converted to travel time using a constant assumed speed. This approach 
+                provided an initial benchmark but ignored transit schedules, transfers, service frequency, and time-of-day variation. 
+                By comparing proxy-based results with R5-generated, schedule-aware travel times, we validate that peak-only,
+                distance-based metrics can misrepresent both the magnitude and spatial distribution of job access. This comparison 
+                motivates the use of time-aware routing for all conclusions presented in this study.
             </p>
 
             <details>
